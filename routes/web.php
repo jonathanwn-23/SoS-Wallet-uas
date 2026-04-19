@@ -1,5 +1,6 @@
 <?php
 
+use Inertia\Inertia;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -22,3 +23,11 @@ Route::get('/riwayat', function () {
 })->name('riwayat');
 
 require __DIR__.'/settings.php';
+
+
+Route::get('/login-user', function () {
+    // Alamat harus sesuai folder: auth (kecil), User (besar), UserLogin (besar)
+    return Inertia::render('auth/User/UserLogin'); 
+})->name('user.login');
+
+Route::get('/user/riwayat', [UserDashboardController::class, 'riwayat'])->name('user.riwayat');

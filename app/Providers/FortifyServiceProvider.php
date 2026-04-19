@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Fortify;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -31,6 +33,24 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+        Fortify::authenticateUsing(function (Request $request) {
+    // Cari user berdasarkan NIK atau Email (karena input di React kamu namanya 'nik')
+    $user = User::where('nik', $request->nik)
+                ->orWhere('email', $request->nik)
+                ->first();
+
+    if ($user && Hash::check($request->password, $user->password)) {
+        // Cek status verifikasi: Warga yang belum diverifikasi tidak boleh login
+        // Jika di database kamu belum ada kolom 'role', hapus bagian: $user->role !== 'admin' &&
+        //if (!$user->is_verified) {
+        //    return null; 
+        //}
+
+        return $user;
+    }
+
+    return null;
+});
     }
 
     /**
