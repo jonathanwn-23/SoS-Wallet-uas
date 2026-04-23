@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class UserDashboardController extends Controller
     // 1. Dashboard Utama 
     public function index()
     {
-        return Inertia::render('User/Dashboard', [
+        return Inertia::render('User/UserDashboard', [
             'auth' => ['user' => Auth::user()]
         ]);
     }

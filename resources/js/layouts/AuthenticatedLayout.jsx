@@ -14,22 +14,22 @@ export default function Authenticated({ user, children }) {
                 </div>
                 
                 <nav className="flex-1 px-4 space-y-4 mt-4">
-                    <Link href={route('dashboard')} className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold">
+                    <Link href="/user/dashboard" className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold">
                         <span>Beranda</span>
                     </Link>
-                    <Link href={route('saldo')} 
+                    <Link href="/user/saldo"
                     className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold">
                     <span>Cek Saldo</span>
                     </Link>
-                    <Link href={route('pembayaran')} 
+                    <Link href="/user/pembayaran"
                     className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold">
                     <span>Pembayaran</span>
                     </Link>
-                    <Link href={route('riwayat')} 
+                    <Link href="/user/riwayat"
                     className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold">
                         <span>Riwayat</span>
                     </Link>
-                    <Link href={route('update')} 
+                    <Link href="/user/update"
                     className="flex items-center space-x-3 p-3 hover:bg-blue-500 rounded-lg transition text-xl font-semibold text-white">
                     <span>Update</span>
                     </Link>
@@ -44,7 +44,7 @@ export default function Authenticated({ user, children }) {
                     <div className="flex items-center space-x-4">
                         <span className="font-semibold text-gray-700">{user.name}</span>
                         <Link 
-                            href={route('logout')} 
+                            href="/user/logout"
                             method="post" 
                             as="button" 
                             className="bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200"

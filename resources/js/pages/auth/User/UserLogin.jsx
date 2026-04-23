@@ -3,7 +3,6 @@ import InputError from '@/components/InputError';
 import InputLabel from '@/components/InputLabel';
 import PrimaryButton from '@/components/PrimaryButton';
 import TextInput from '@/components/TextInput';
-import UserLayout from '@/layouts/UserLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Login({ status, canResetPassword }) {
@@ -15,11 +14,11 @@ export default function Login({ status, canResetPassword }) {
 
 const submit = (e) => {
     e.preventDefault();
-    post(route('login')); 
+      post('/login-user'); 
 };
 
     return (
-        <UserLayout>
+        <>
             <Head>
                 <title>Log in</title>
             </Head>
@@ -30,6 +29,7 @@ const submit = (e) => {
                 </div>
             )}
 
+            <div className="w-full max-w-md px-8 py-6 bg-white shadow-md rounded-xl border border-gray-100 mt-4">
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="nik" value="Masukkan Nomor Induk Kependudukan (NIK)" className="text-center" />
@@ -39,12 +39,16 @@ const submit = (e) => {
                     type="text"
                     name="nik"
                     value={data.nik}
+                    maxLength={16}
                     // Tambahkan style inline di sini untuk memaksa warna teks hitam & bg putih
                     style={{ backgroundColor: 'white', color: 'black', border: '1px solid #d1d5db' }}
                     className="mt-1 block w-full text-center rounded-full"
                     autoComplete="off"
                     isFocused={true}
-                    onChange={(e) => setData('nik', e.target.value)}
+                    onChange={(e) => {
+                    const hanyaAngka = e.target.value.replace(/\D/g, '');
+                    setData('nik', hanyaAngka);
+                }}
                 />
 
                     <InputError message={errors.nik} className="mt-2 text-center" />
@@ -62,6 +66,7 @@ const submit = (e) => {
 
                 </div>
             </form>
-        </UserLayout>
+        </div>
+        </>
     );
 }

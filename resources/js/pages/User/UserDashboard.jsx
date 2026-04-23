@@ -17,3 +17,5 @@ export default function Dashboard({ auth }) {
         </AuthenticatedLayout>
     );
 }
+
+Dashboard.layout = (page) => page;

@@ -25,32 +25,37 @@ class FortifyServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
         Fortify::authenticateUsing(function (Request $request) {
-    // Cari user berdasarkan NIK atau Email (karena input di React kamu namanya 'nik')
-    $user = User::where('nik', $request->nik)
-                ->orWhere('email', $request->nik)
-                ->first();
+            // 1. Cek apakah ini percobaan login Admin (menggunakan Email & Password)
+            if ($request->filled('email') && $request->filled('password')) {
+                $admin = User::where('email', $request->email)->where('role', 'admin')->first();
+                if ($admin && Hash::check($request->password, $admin->password)) {
+                    return $admin;
+                }
+            }
 
-    if ($user && Hash::check($request->password, $user->password)) {
-        // Cek status verifikasi: Warga yang belum diverifikasi tidak boleh login
-        // Jika di database kamu belum ada kolom 'role', hapus bagian: $user->role !== 'admin' &&
-        //if (!$user->is_verified) {
-        //    return null; 
-        //}
+            // 2. Cek apakah ini percobaan login User (menggunakan NIK saja)
+            // Karena di frontend kamu inputannya bernama 'nik' untuk user
+            if ($request->filled('nik')) {
+                // Cari user dengan NIK tersebut dan role-nya harus 'user'
+                $user = User::where('nik', $request->nik)->where('role', 'user')->first();
+                if ($user) {
+                    // Cek status verifikasi jika diperlukan (misal: hanya yang 'Validated' yang boleh masuk)
+                    // if ($user->status !== 'Validated') { return null; }
 
-        return $user;
-    }
+                    // Karena user biasa tidak punya password, langsung return object user-nya
+                    return $user; 
+                }
+            }
 
-    return null;
-});
+            // Jika tidak ada yang cocok (baik admin maupun user), return null (login gagal)
+            return null;
+        });
     }
 
     /**

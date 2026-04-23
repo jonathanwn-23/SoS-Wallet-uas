@@ -80,7 +80,7 @@ export default function index() {
                             {dataPosts.length > 0 ? (
                                 dataPosts.map((post: any) => (
                                     <tr key={post.id} className="border-b hover:bg-gray-50">
-                                        <td className="p-3">{post.recepient_validation}</td>
+                                        <td className="p-3">{post.name}</td>
                                         <td className="p-3">{post.nik}</td>
                                         <td className="p-3">
                                             <span className={`px-2 py-1 rounded text-xs font-semibold ${
