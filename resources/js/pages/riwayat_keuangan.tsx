@@ -1,35 +1,87 @@
+import React from 'react';
 import { Head } from '@inertiajs/react';
-import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 
-export default function Riwayat() {
+interface UserHistory {
+    id: number;
+    name: string; 
+    pemasukkan: number;
+    sisa_saldo: number;
+}
+
+interface Props {
+    riwayatUsers: UserHistory[];
+}
+
+export default function RiwayatKeuanganAdmin({ riwayatUsers }: Props) {
+    const formatRupiah = (angka: number) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(angka);
+    };
+
     return (
         <>
-            <Head title="Riwayat" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
-                    <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
-                    </div>
+            <Head title="Riwayat Keuangan" />
+
+            {/* Gunakan w-full agar mengisi penuh lebar yang tersedia (mepet) */}
+            <div className="p-6 w-full">
+                    
+                {/* Header Text: Tanpa background putih agar menyatu dengan halaman */}
+                <div className="mb-6">
+                    <h2 className="text-xl font-bold text-gray-900">Riwayat Keuangan User</h2>
+                    <p className="text-gray-600 mt-1 text-sm">Berikut semua riwayat keuangan user dari pemasukan hingga saldo yang tersedia saat ini.</p>
                 </div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />
+
+                {/* Looping Card Data User */}
+                <div className="space-y-4">
+                    {riwayatUsers && riwayatUsers.length > 0 ? (
+                        riwayatUsers.map((user) => (
+                            <div key={user.id} className="bg-white border border-gray-200 rounded-lg p-5 flex justify-between items-center shadow-sm">
+                                
+                                {/* Bagian Kiri: Nama dan Label */}
+                                <div className="space-y-3">
+                                    <h3 className="font-bold text-gray-900 text-lg">{user.name}</h3>
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-medium text-gray-600">Pemasukkan</p>
+                                        <p className="text-sm font-medium text-gray-600">Sisa Saldo</p>
+                                    </div>
+                                </div>
+
+                                {/* Bagian Kanan: Nominal Uang */}
+                                <div className="text-right space-y-3">
+                                    <div className="h-7 text-transparent select-none">-</div> 
+                                    <div className="space-y-1">
+                                        <p className="text-sm font-bold text-green-600">
+                                            +{formatRupiah(user.pemasukkan)}
+                                        </p>
+                                        <p className="text-sm font-bold text-gray-900">
+                                            {formatRupiah(user.sisa_saldo)}
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-center p-10 bg-white rounded-lg border border-dashed border-gray-300">
+                            <p className="text-gray-500">Belum ada riwayat data keuangan yang valid.</p>
+                        </div>
+                    )}
                 </div>
+
             </div>
         </>
     );
 }
 
-Riwayat.layout = {
+// Layout configuration untuk breadcrumbs (Sudah diperbaiki namanya!)
+RiwayatKeuanganAdmin.layout = {
     breadcrumbs: [
         {
             title: 'Riwayat',
-            href: '/riwayat',
+            href: '/admin/riwayat-keuangan',
         },
     ],
 };

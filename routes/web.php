@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\AdminRiwayatController;
+
+// mengatur riwayat keuangan user di dashboard admin
+Route::get('/admin/riwayat-keuangan', [AdminRiwayatController::class, 'index'])->name('admin.riwayat');
 
 Route::inertia('/', 'welcome', [
     'canRegister' => Features::enabled(Features::registration()),
@@ -32,6 +36,9 @@ Route::get('/login-user', function () {
     // Alamat harus sesuai folder: auth (kecil), User (besar), UserLogin (besar)
     return Inertia::render('auth/User/UserLogin'); 
 })->name('user.login');
+
+// Tambahkan baris ini di tempat kamu mendeklarasikan rute User
+Route::post('/user/pembayaran', [App\Http\Controllers\TransactionController::class, 'storePembayaran'])->name('user.pembayaran.store');
 
 // menyimpan riwayat keuangan user
 Route::get('/user/riwayat', [\App\Http\Controllers\TransactionController::class, 'riwayat'])->name('user.riwayat');

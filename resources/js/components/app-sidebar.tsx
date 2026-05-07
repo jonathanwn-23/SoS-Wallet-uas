@@ -29,7 +29,7 @@ const mainNavItems: NavItem[] = [
     },
      {
         title: 'Riwayat Keuangan',
-        href: '/riwayat',
+        href: '/admin/riwayat-keuangan',
         icon: BookOpen,
     },
 ];
