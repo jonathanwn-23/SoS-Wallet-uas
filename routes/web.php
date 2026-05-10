@@ -31,11 +31,20 @@ Route::get('/riwayat', function () {
 
 require __DIR__.'/settings.php';
 
+// login user
+Route::get('/login', function () {
+    return Inertia::render('auth/User/UserLogin'); // Pastikan path file ini tetap sesuai dengan milikmu
+})->name('login');
 
-Route::get('/login-user', function () {
-    // Alamat harus sesuai folder: auth (kecil), User (besar), UserLogin (besar)
-    return Inertia::render('auth/User/UserLogin'); 
-})->name('user.login');
+// Rute untuk Landing Page khusus Admin
+Route::get('/admin', function () {
+    return Inertia::render('WelcomeAdmin'); 
+})->name('admin.welcome');
+
+// login admin
+Route::get('/login-admin', function () {
+    return Inertia::render('auth/login'); 
+})->name('admin.login');
 
 // Tambahkan baris ini di tempat kamu mendeklarasikan rute User
 Route::post('/user/pembayaran', [App\Http\Controllers\TransactionController::class, 'storePembayaran'])->name('user.pembayaran.store');
@@ -92,12 +101,36 @@ Route::post('/login-user', function (Request $request) {
 // membuat user logout hanya ke tampilan login user tanpa ke tampilan log admin
 Route::post('/user/logout', function (\Illuminate\Http\Request $request) {
     // 1. Keluarkan user dari sistem
-    Auth::logout();
+    Auth::guard('web')->logout();
 
     // 2. Hapus sesi dan token keamanan (Wajib untuk keamanan)
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
     // 3. Arahkan kembali ke halaman login khusus user
-    return redirect('/login-user');
+    return redirect('/login');
 });
+
+// --- RUTE LOGOUT BAJAKAN ---
+Route::post('/logout', function (Request $request) {
+    Auth::guard('web')->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // Pastikan diarahkan ke /login (halaman user biru)
+    return redirect('/login');
+})->name('logout');
+
+// --- RUTE LOGOUT KHUSUS ADMIN ---
+Route::post('/logout-admin', function (\Illuminate\Http\Request $request) {
+    // 1. Keluarkan admin dari sistem
+    Auth::guard('web')->logout();
+
+    // 2. Hapus sesi dan token keamanan (Wajib untuk keamanan)
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // 3. Arahkan kembali ke halaman login khusus admin
+    return redirect('/login-admin');
+})->name('admin.logout');

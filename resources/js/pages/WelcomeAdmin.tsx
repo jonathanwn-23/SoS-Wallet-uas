@@ -1,10 +1,10 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 
-export default function Welcome() {
+export default function WelcomeAdmin() {
     return (
         <>
-            <Head title="Selamat Datang - SOS-WALLET" />
+            <Head title="Admin - SOS-WALLET" />
             
             {/* Mengaktifkan Smooth Scrolling untuk efek meluncur saat menu diklik */}
             <style>{`
@@ -34,9 +34,16 @@ export default function Welcome() {
                         <a href="#tentang-kami" className="text-gray-600 hover:text-blue-500 text-sm font-medium transition-colors">Tentang Kami</a>
                     </div>
 
-                    <div>
+                    {/* --- REVISI: Penambahan Tombol Daftar & Perubahan Rute Login --- */}
+                    <div className="flex items-center gap-3">
                         <Link 
-                            href="/login" 
+                            href="/register" 
+                            className="border border-[#2b85ff] text-[#2b85ff] hover:bg-blue-50 px-6 py-2 rounded-md text-sm font-bold transition-all"
+                        >
+                            Daftar
+                        </Link>
+                        <Link 
+                            href="/login-admin" 
                             className="bg-[#2b85ff] hover:bg-blue-600 text-white px-8 py-2 rounded-md text-sm font-bold transition-all"
                         >
                             Login
@@ -46,9 +53,7 @@ export default function Welcome() {
 
                 {/* ==================== 2. BAGIAN PAHLAWAN (HERO) ==================== */}
                 <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-white pt-20">
-                    {/* Lingkaran Dekoratif Kanan Atas */}
                     <div className="absolute right-[-150px] top-10 w-[400px] h-[400px] border-[50px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
-                    {/* Lingkaran Dekoratif Kiri Tengah */}
                     <div className="absolute left-[-150px] bottom-20 w-[300px] h-[300px] border-[40px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
 
                     <div className="text-center z-10 max-w-2xl px-6">
@@ -69,7 +74,6 @@ export default function Welcome() {
                         </h2>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            {/* Kartu 1: Transaksi Instan */}
                             <div className="bg-white rounded-xl p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
                                 <h3 className="text-lg font-extrabold text-[#111827] mb-4">Transaksi Instan</h3>
                                 <p className="text-gray-500 text-[13px] leading-relaxed">
@@ -77,7 +81,6 @@ export default function Welcome() {
                                 </p>
                             </div>
 
-                            {/* Kartu 2: Transparansi Penuh */}
                             <div className="bg-white rounded-xl p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
                                 <h3 className="text-lg font-extrabold text-[#111827] mb-4">Transparansi Penuh</h3>
                                 <p className="text-gray-500 text-[13px] leading-relaxed">
@@ -90,9 +93,7 @@ export default function Welcome() {
 
                 {/* ==================== 4. BAGIAN TENTANG KAMI ==================== */}
                 <section id="tentang-kami" className="relative min-h-screen flex flex-col items-center justify-center bg-white py-20">
-                    {/* Lingkaran Dekoratif Kiri Bawah */}
                     <div className="absolute left-[-120px] bottom-10 w-[300px] h-[300px] border-[40px] border-[#e8f7f9] rounded-full opacity-80 z-0 pointer-events-none"></div>
-                    {/* Lingkaran Dekoratif Kanan Atas */}
                     <div className="absolute right-[-100px] top-20 w-[250px] h-[250px] border-[35px] border-[#e8f7f9] rounded-full opacity-80 z-0 pointer-events-none"></div>
 
                     <div className="relative z-10 max-w-4xl mx-auto px-6 w-full">
@@ -101,7 +102,6 @@ export default function Welcome() {
                         </h2>
 
                         <div className="flex flex-col md:flex-row justify-center items-end gap-20 md:gap-32">
-                            {/* Profil 1: Jonathan */}
                             <div className="flex flex-col items-center text-center">
                                 <img 
                                     src="/jonathan.png" 
@@ -112,7 +112,6 @@ export default function Welcome() {
                                 <p className="text-gray-500 text-sm mt-1">Teknologi Informasi 25</p>
                             </div>
 
-                            {/* Profil 2: Joshua */}
                             <div className="flex flex-col items-center text-center">
                                 <img 
                                     src="/joshua.png" 
@@ -137,4 +136,5 @@ export default function Welcome() {
     );
 }
 
-Welcome.layout = (page: React.ReactNode) => <>{page}</>;
+// Tambahkan kode ini di baris paling bawah file untuk menyingkirkan sidebar/layout bawaan
+WelcomeAdmin.layout = (page: React.ReactNode) => <>{page}</>;

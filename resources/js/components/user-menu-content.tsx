@@ -19,11 +19,6 @@ type Props = {
 export function UserMenuContent({ user }: Props) {
     const cleanup = useMobileNavigation();
 
-    const handleLogout = () => {
-        cleanup();
-        router.flushAll();
-    };
-
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
@@ -40,24 +35,28 @@ export function UserMenuContent({ user }: Props) {
                         prefetch
                         onClick={cleanup}
                     >
-                        <Settings className="mr-2" />
+                        <Settings className="mr-2 h-4 w-4" />
                         Settings
                     </Link>
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-                <Link
-                    className="block w-full cursor-pointer"
-                    href={logout()}
-                    as="button"
-                    onClick={handleLogout}
-                    data-test="logout-button"
-                >
-                    <LogOut className="mr-2" />
-                    Log out
-                </Link>
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+                <DropdownMenuItem asChild>
+                    {/* TOMBOL LOGOUT YANG SUDAH DIPERBAIKI */}
+                    <Link
+                        className="block w-full cursor-pointer"
+                        href="/logout-admin"
+                        method="post"
+                        as="button"
+                        onClick={cleanup}
+                        data-test="logout-button"
+                    >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Log out
+                    </Link>
+                </DropdownMenuItem>
+            </DropdownMenuGroup>
         </>
     );
 }

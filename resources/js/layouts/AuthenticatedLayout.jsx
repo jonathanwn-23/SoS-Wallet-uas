@@ -44,7 +44,7 @@ export default function Authenticated({ user, children }) {
                     <div className="flex items-center space-x-4">
                         <span className="font-semibold text-gray-700">{user.name}</span>
                         <Link 
-                            href="/user/logout"
+                            href="/logout"
                             method="post" 
                             as="button" 
                             className="bg-red-100 text-red-600 px-3 py-1 rounded hover:bg-red-200"
