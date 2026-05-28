@@ -4,7 +4,7 @@ import { Head, Link } from '@inertiajs/react';
 export default function Welcome() {
     return (
         <>
-            <Head title="Selamat Datang - SOS-WALLET" />
+            <Head title="SOS-WALLET" />
             
             {/* Mengaktifkan Smooth Scrolling untuk efek meluncur saat menu diklik */}
             <style>{`
@@ -18,13 +18,7 @@ export default function Welcome() {
                 {/* ==================== 1. BILAH NAVIGASI ==================== */}
                 <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm shadow-sm z-50 px-8 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="bg-blue-500 p-1.5 rounded-md">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-                                <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-                                <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-                            </svg>
-                        </div>
+            
                         <span className="text-blue-500 font-bold text-xl tracking-tight">SOS-WALLET</span>
                     </div>
 
@@ -44,22 +38,67 @@ export default function Welcome() {
                     </div>
                 </nav>
 
-                {/* ==================== 2. BAGIAN PAHLAWAN (HERO) ==================== */}
-                <section id="home" className="relative min-h-screen flex flex-col items-center justify-center bg-white pt-20">
-                    {/* Lingkaran Dekoratif Kanan Atas */}
-                    <div className="absolute right-[-150px] top-10 w-[400px] h-[400px] border-[50px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
-                    {/* Lingkaran Dekoratif Kiri Tengah */}
-                    <div className="absolute left-[-150px] bottom-20 w-[300px] h-[300px] border-[40px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
+                {/* =========================== 2. BAGIAN DASBOARD =========================== */}
+                <section id="home" className="relative min-h-screen flex items-center justify-center bg-white pt-20 overflow-hidden">
+                
+                {/* ===== CSS KUSTOM UNTUK ANIMASI MENGAMBANG ===== */}
+                <style>
+                    {`
+                    @keyframes floatTangan {
+                        0%, 100% { transform: translateY(0px); }
+                        50% { transform: translateY(-20px); }
+                    }
+                    .animate-float-tangan {
+                        /* 4s adalah durasi 1 putaran animasi (4 detik). ease-in-out membuatnya melambat di ujung agar halus */
+                        animation: floatTangan 4s ease-in-out infinite;
+                    }
+                    `}
+                </style>
 
-                    <div className="text-center z-10 max-w-2xl px-6">
-                        <h1 className="text-[44px] md:text-[56px] font-black text-[#111827] mb-6 leading-[1.1] tracking-tight">
+                {/* Lingkaran Dekoratif Kanan Atas (TETAP) */}
+                <div className="absolute right-[-150px] top-10 w-[400px] h-[400px] border-[50px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
+                
+                {/* Lingkaran Dekoratif Kiri Tengah (TETAP) */}
+                <div className="absolute left-[-150px] bottom-20 w-[300px] h-[300px] border-[40px] border-[#e8f7f9] rounded-full opacity-60 z-0 pointer-events-none"></div>
+
+                {/* GAMBAR: Koin Transparan Kanan Bawah */}
+                        <img 
+                        src="/koin-3d.png" 
+                        alt="Ornamen Koin Kiri" 
+                        className="absolute top-[-5%] left-[-5%] w-[350px] lg:w-[350px] opacity-15 blur-[1px] pointer-events-none" 
+                        />
+
+                <img 
+                    src="/koin-3d.png" 
+                    alt="Ornamen Koin kanan" 
+                    className="absolute bottom-10 right-10 w-48 md:w-64 lg:w-80 opacity-15 z-0 pointer-events-none"
+                />
+
+                {/* ===== KONTEN UTAMA ===== */}
+                <div className="relative z-10 w-full max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-16 xl:gap-2">
+                    
+                    {/* KOLOM KIRI: Gambar Tangan Uang */}
+                    <div className="flex-shrink-0 flex justify-center">
+                        <img 
+                            src="/tangan-uang.png" 
+                            alt="Ilustrasi Bantuan" 
+                            /* Class animate-float-tangan ditambahkan di sini */
+                            className="w-[300px] md:w-[400px] lg:w-[450px] xl:w-[500px] object-contain drop-shadow-2xl animate-float-tangan"
+                        />
+                    </div>
+
+                    {/* KOLOM KANAN: Teks Judul dan Paragraf */}
+                    <div className="flex flex-col items-start text-left max-w-lg">
+                        <h1 className="text-[44px] md:text-[56px] lg:text-[60px] xl:text-[64px] font-black text-[#111827] mb-6 leading-[1.1] tracking-tight">
                             Bantuan Aman <br /> Tanpa Perantara
                         </h1>
-                        <p className="text-gray-600 text-[15px] md:text-[17px] max-w-lg mx-auto leading-relaxed">
+                        <p className="text-gray-600 text-[16px] md:text-[18px] leading-relaxed font-medium">
                             Memakai dana bantuan dengan aman tentram serta memudahkan dalam transaksi
                         </p>
                     </div>
-                </section>
+
+                </div>
+            </section>
 
                 {/* ==================== 3. BAGIAN FITUR ==================== */}
                 <section id="fitur" className="relative min-h-screen flex flex-col items-center justify-center bg-[#eef5ff] py-20">
@@ -68,7 +107,21 @@ export default function Welcome() {
                             Keunggulan Kami
                         </h2>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        {/* GAMBAR: Koin Transparan Kanan Bawah */}
+
+                        <img 
+                        src="/koin-3d.png" 
+                        alt="Ornamen Koin Kiri" 
+                        className="absolute top-[-100%] left-[-74%] w-[350px] lg:w-[450px] opacity-15 blur-[1px] pointer-events-none" 
+                        />
+
+                        <img 
+                        src="/koin-3d.png" 
+                        alt="Ornamen Koin" 
+                        className="absolute bottom-[-80%] right-[-20%] w-48 md:w-64 lg:w-60 opacity-15 z-0 pointer-events-none"
+                        />
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
                             {/* Kartu 1: Transaksi Instan */}
                             <div className="bg-white rounded-xl p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
                                 <h3 className="text-lg font-extrabold text-[#111827] mb-4">Transaksi Instan</h3>
@@ -84,11 +137,20 @@ export default function Welcome() {
                                     Pantau aliran dana secara real-time. Setiap transaksi tercatat secara permanen dan dapat diaudit kapan saja
                                 </p>
                             </div>
+
+                             {/* Kartu 3: Transaksi Instan */}
+                            <div className="bg-white rounded-xl p-10 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                                <h3 className="text-lg font-extrabold text-[#111827] mb-4">Sistem Authentification</h3>
+                                <p className="text-gray-500 text-[13px] leading-relaxed">
+                                    Login dengan data yang terdaftar valid dan dilengkapi dengan keamanan yang baik
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 {/* ==================== 4. BAGIAN TENTANG KAMI ==================== */}
+                
                 <section id="tentang-kami" className="relative min-h-screen flex flex-col items-center justify-center bg-white py-20">
                     {/* Lingkaran Dekoratif Kiri Bawah */}
                     <div className="absolute left-[-120px] bottom-10 w-[300px] h-[300px] border-[40px] border-[#e8f7f9] rounded-full opacity-80 z-0 pointer-events-none"></div>
@@ -99,7 +161,20 @@ export default function Welcome() {
                         <h2 className="text-3xl font-black text-center text-[#111827] mb-20 tracking-tight">
                             Tentang Kami
                         </h2>
-
+                        
+                         {/* GAMBAR: Koin Transparan */}
+                        <img 
+                        src="/koin-3d.png" 
+                        alt="Ornamen Koin Kiri" 
+                        className="absolute top-[-10%] left-[-35%] w-[350px] lg:w-[350px] opacity-15 blur-[1px] pointer-events-none" 
+                        />
+                        
+                        <img 
+                        src="/koin-3d.png" 
+                        alt="Ornamen Koin" 
+                        className="absolute bottom-[-30%] right-[-50%] w-48 md:w-64 lg:w-40 opacity-15 z-0 pointer-events-none"
+                        />
+                        
                         <div className="flex flex-col md:flex-row justify-center items-end gap-20 md:gap-32">
                             {/* Profil 1: Jonathan */}
                             <div className="flex flex-col items-center text-center">
@@ -120,6 +195,16 @@ export default function Welcome() {
                                     className="h-72 md:h-80 w-auto object-contain object-bottom mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)] scale-125 hover:scale-[1.30] transition-transform duration-300 origin-bottom"
                                 />
                                 <h3 className="text-base font-bold text-[#111827]">Joshua Winner Naya</h3>
+                                <p className="text-gray-500 text-sm mt-1">Teknologi Informasi 25</p>
+                            </div>
+
+                             <div className="flex flex-col items-center text-center">
+                                <img 
+                                    src="/juna.png" 
+                                    alt="Dede Junawan Rizky" 
+                                    className="h-72 md:h-80 w-auto object-contain object-bottom mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)] scale-105 hover:scale-110 transition-transform duration-300 origin-bottom"
+                                />
+                                <h3 className="text-base font-bold text-[#111827]">Dede Junawan Rizky</h3>
                                 <p className="text-gray-500 text-sm mt-1">Teknologi Informasi 25</p>
                             </div>
                         </div>

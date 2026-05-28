@@ -43,8 +43,36 @@ class UserDashboardController extends Controller
     // 4. Cek Saldo Detail
     public function saldo()
     {
-        return Inertia::render('User/Saldo', [
-            'hitungSaldo' => 150000 // Logika perhitungan saldo masuk - keluar
+        $userId = \Illuminate\Support\Facades\Auth::id();
+
+        // 1. LOGIKA SALDO (Sudah Berjalan Sempurna)
+        $pemasukan = \App\Models\Transaction::where('user_id', $userId)->where('type', 'in')->sum('amount');
+        $pengeluaran = \App\Models\Transaction::where('user_id', $userId)->where('type', 'out')->sum('amount');
+        
+        $totalSaldoNyata = $pemasukan - $pengeluaran;
+
+
+        // 2. LOGIKA TANGGAL (Diperbarui agar kebal error)
+        $lastTransaction = \App\Models\Transaction::where('user_id', $userId)
+                            ->where('type', 'in')
+                            ->orderBy('created_at', 'desc')
+                            ->first();
+
+        // Menggunakan date(strtotime()) agar pasti berhasil meskipun format database berupa string biasa
+        if ($lastTransaction) {
+            $tanggalDiterima = date('d/m/Y', strtotime($lastTransaction->created_at));
+        } else {
+            $tanggalDiterima = 'Belum ada dana masuk';
+        }
+
+
+        // 3. KIRIM KE REACT
+        return \Inertia\Inertia::render('User/Saldo', [
+            'hitungSaldo' => $totalSaldoNyata, 
+            
+            // PASTIKAN NAMA VARIABEL DI BAWAH INI ADALAH 'tanggal_terima' 
+            // agar bisa ditangkap oleh file Saldo.jsx
+            'tanggal_terima' => $tanggalDiterima 
         ]);
     }
 

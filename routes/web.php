@@ -11,6 +11,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminRiwayatController;
 
+
+// Route untuk halaman Top Up Saldo
+Route::get('/admin/topup', [\App\Http\Controllers\TransactionController::class, 'topupForm'])->name('admin.topup');
+
+// Route untuk memproses data pengiriman saldo
+Route::post('/admin/topup', [\App\Http\Controllers\TransactionController::class, 'storeTopup']);
+
 // mengatur riwayat keuangan user di dashboard admin
 Route::get('/admin/riwayat-keuangan', [AdminRiwayatController::class, 'index'])->name('admin.riwayat');
 
@@ -59,7 +66,7 @@ Route::get('/user/pembayaran', [\App\Http\Controllers\TransactionController::cla
 Route::get('/user/dashboard', [UserDashboardController::class, 'index']);
 
 // menampilkan saldo user yang tersedia
-Route::get('/user/saldo', [\App\Http\Controllers\TransactionController::class, 'saldo']);
+Route::get('/user/saldo', [\App\Http\Controllers\UserDashboardController::class, 'saldo']);
 
 // membuat tampilan update sederhana
 Route::get('/user/update', function () {
