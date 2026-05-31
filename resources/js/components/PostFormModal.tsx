@@ -91,7 +91,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) =>{
 if (!isOpen) return null;
 
 return (
-     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 transition-all duration-300">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
         <h2 className="text-lg font-semibold mb-4">{post ? "Edit Post" : "Add Post"}</h2>
         <form onSubmit={handleSubmit}encType="multipart/form-data">
