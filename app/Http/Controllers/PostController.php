@@ -5,27 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class PostController extends Controller
 {
-    //method panggilan halaman tabel
-    public function index(Request $request): Response
+    public function index(Request $request)
     {
-        // 1. Ambil kata kunci pencarian dari URL (jika ada)
+        // ambil kata kunci pencarian dari URL 
         $search = $request->input('search');
 
-        // 2. Buat query dasar ke database
-        $posts = User::query()->where('role', 'user') 
-        ->when($search, function ($query, $search) {
-        $query->where('name', 'like', "%{$search}%") // name, bukan recepient_validation
-              ->orWhere('nik', 'like', "%{$search}%")
-              ->orWhere('status', 'like', "%{$search}%");
-    })
-        ->paginate(10)
-        ->withQueryString();
+        // buat query dasar ke database
+        $posts = User::query()->where('role', 'user')
+            ->when($search, function ($query, $search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('nik', 'like', "%{$search}%")
+                      ->orWhere('status', 'like', "%{$search}%");
+                });
+            })
+            ->paginate(10)
+            ->withQueryString();
 
-        // 4. Kirim data posts dan kata kunci pencarian kembali ke React
+        // kirim data posts dan kata kunci pencarian kembali ke React
         return Inertia::render('posts', [
             'posts' => $posts,
             'filters' => $request->only(['search'])
@@ -57,8 +57,7 @@ class PostController extends Controller
 
     //method untuk ubah data 
     public function update(Request $request, User $post) {
-        //validasi input
-        $request -> validate([
+         $request -> validate([
             'recepient_validation' => 'required|string|max:255',
             'nik' => 'required|string|max:16',
             'status' => 'required|string',
